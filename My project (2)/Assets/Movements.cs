@@ -15,15 +15,14 @@ public class Movements : MonoBehaviour
     [SerializeField]
     private InputActionReference Jump, GoLeft, GoRight;
     public Vector2 playerVelocity = new Vector2(0f, 0f);
-    [SerializeField] public GameObject inst_projectile;
-    GameObject projectile;
+    
     public main game;
 
 
     void Start()
 
     {
-        projectile = Instantiate(inst_projectile, new Vector2(-10000, -1000), transform.rotation);
+        
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
     }
@@ -63,20 +62,27 @@ public class Movements : MonoBehaviour
             {
                 rb.velocity = new Vector2(5, rb.velocity.y);
             }
-            projectile.GetComponent<Ball>().updateBall();
+            game.transition = false;
+            
         }
     }
-    public void Throw(InputAction.CallbackContext ctx)
+    public void ShootMode(InputAction.CallbackContext ctx)
     {
-        if (game.gameState==1) { 
+        if (!game.transition)
+        {
             if (ctx.phase == InputActionPhase.Started)
             {
-                // GameObject monClone = Instantiate(ball, transform.position + new Vector3(1, 0, 0), transform.rotation);
 
-                projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(1, 0), 5, 1);
-                print("aaaawababugh");
+                if (game.gameState == 1)
+                {
+                    game.gameState = 2;
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    game.transition = true;
+                    print("Wop Wop Wop");
+                }
             }
         }
 
     }
+
 }
