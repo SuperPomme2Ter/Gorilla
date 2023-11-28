@@ -8,7 +8,7 @@ public class ShootTurn : MonoBehaviour
     [SerializeField] public GameObject inst_projectile;
     [SerializeField]
     private InputActionReference Up, Left, Right,Down;
-    GameObject projectile;
+    public GameObject projectile;
     public main game;
     public Vector3 shoot=new Vector3(0,0,0);
     public Vector3 v;
@@ -29,19 +29,19 @@ public class ShootTurn : MonoBehaviour
         {
             if (Up.action.inProgress)
             {
-                shoot.y += 0.1f;
+                shoot.y += 4f * Time.fixedDeltaTime;
             }
             if (Down.action.inProgress)
             {
-                shoot.y -= 0.1f;
+                shoot.y -= 4f * Time.fixedDeltaTime;
             }
             if (Left.action.inProgress)
             {
-                shoot.x -= 0.1f;
+                shoot.x -= 4f * Time.fixedDeltaTime;
             }
             if (Right.action.inProgress)
             {
-                shoot.x += 0.1f;
+                shoot.x += 4f * Time.fixedDeltaTime;
             }
             v= (transform.position + new Vector3(1, 0, 0)+shoot)- (transform.position + new Vector3(1, 0, 0));
             Vector3 currentPos=transform.position+new Vector3(1,0,0);
@@ -49,17 +49,12 @@ public class ShootTurn : MonoBehaviour
             {
                 if (currentPos.y < -3.0f)
                     break;
-                v += Physics.gravity*Time.fixedDeltaTime;
+                v +=Physics.gravity*Time.fixedDeltaTime;
                 Vector3 nextPos=currentPos+v*Time.fixedDeltaTime;
                 Debug.DrawLine(currentPos,nextPos);
                 currentPos = nextPos;
             }
             game.transition = false;
-        }
-        if (projectile.GetComponent<Ball>().transition)
-        {
-            game.gameState = 4;
-            projectile.GetComponent<Ball>().transition = false;
         }
     }
     public void Throw(InputAction.CallbackContext ctx)
@@ -70,10 +65,11 @@ public class ShootTurn : MonoBehaviour
             {
                 if (ctx.phase == InputActionPhase.Started)
                 {
-                    projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(1, 0), shoot.x, shoot.y);
-                    print("aaaawababugh");
+                    projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(1, 0), shoot.x,shoot.y);
                     game.gameState = 3;
                     game.transition = true;
+                    game.bulletTime = true;
+
 
                 }
             }

@@ -10,8 +10,8 @@ public class Movements : MonoBehaviour
 {
     // Start is called before the first frame update
     public Rigidbody2D rb;
-    public BoxCollider2D col;
-    private bool grounded;
+    public BoxCollider2D sol;
+    public bool grounded;
     [SerializeField]
     private InputActionReference Jump, GoLeft, GoRight;
     public Vector2 playerVelocity = new Vector2(0f, 0f);
@@ -24,18 +24,21 @@ public class Movements : MonoBehaviour
     {
         
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<BoxCollider2D>();
+        sol = GetComponent<BoxCollider2D>();
     }
     
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D sol)
     {
         grounded = true;
 
 
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D sol)
     {
-        grounded = false;
+        if (!game.bulletTime)
+        {
+            grounded = false;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -63,6 +66,7 @@ public class Movements : MonoBehaviour
                 rb.velocity = new Vector2(5, rb.velocity.y);
             }
             game.transition = false;
+            game.bulletTime = false;
             
         }
     }
