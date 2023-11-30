@@ -43,8 +43,8 @@ public class ShootTurn : MonoBehaviour
             {
                 shoot.x += 4f * Time.fixedDeltaTime;
             }
-            v= (transform.position + new Vector3(1, 0, 0)+shoot)- (transform.position + new Vector3(1, 0, 0));
-            Vector3 currentPos=transform.position+new Vector3(1,0,0);
+            v= (transform.position + new Vector3(0, 1.5f, 0)+shoot)- (transform.position + new Vector3(0, 1.5f, 0));
+            Vector3 currentPos=transform.position+new Vector3(0, 1.5f, 0);
             for (int i = 0; i < 50; i++)
             {
                 if (currentPos.y < -3.0f)
@@ -68,7 +68,7 @@ public class ShootTurn : MonoBehaviour
             {
                 if (ctx.phase == InputActionPhase.Started)
                 {
-                    projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(1, 0), shoot.x,shoot.y);
+                    projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), shoot.x,shoot.y);
                     game.gameState = 3;
                     game.transition = true;
                     game.bulletTime = true;

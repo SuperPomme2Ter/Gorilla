@@ -16,9 +16,10 @@ public class IATurn : MonoBehaviour
 
     public int nbTry;
     public int collision;
-    private Vector3 sens;
+    public Vector3 sens;
     public float x;
     public float y;
+    public Vector3 currentPos;
 
     void Start()
     {
@@ -56,15 +57,15 @@ public class IATurn : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (game.gameState == 4)
+        if (game.gameState == 4 || game.gameState == 6 || game.gameState==8)
         {
             if (nbTry < 400)
             {
-                Vector3 v = (transform.position + sens + dir) - (transform.position + sens);
-                Vector3 currentPos = transform.position + sens;
-                v = (transform.position + sens + dir) - (transform.position + sens);
-                currentPos = transform.position + sens;
-                for (int i = 0; i < 600; i++)
+                Vector3 v = (transform.position + new Vector3(0, 1.5f) + dir) - (transform.position + new Vector3(0, 1.5f));
+                currentPos = transform.position + new Vector3(0, 1.5f);
+                v = (transform.position + new Vector3(0, 1.5f) + dir) - (transform.position + new Vector3(0, 1.5f));
+                currentPos = transform.position + new Vector3(0, 1.5f);
+                for (int i = 0; i < 500; i++)
                 {
 
                     foreach (var Col in _terrain.ground)
@@ -104,7 +105,7 @@ public class IATurn : MonoBehaviour
                     currentPos = nextPos;
                     if (rb.gameObject.GetComponent<CapsuleCollider2D>().OverlapPoint(currentPos))
                     {
-                        proj.projectile.GetComponent<Ball>().createBall(transform.position + sens, dir.x, dir.y);
+                        proj.projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), dir.x, dir.y);
                         game.gameState = 3;
                         game.bulletTime = true;
 
@@ -115,7 +116,7 @@ public class IATurn : MonoBehaviour
                 }
                 if (rb.gameObject.GetComponent<CapsuleCollider2D>().OverlapPoint(currentPos))
                 {
-                    proj.projectile.GetComponent<Ball>().createBall(transform.position + sens, dir.x, dir.y);
+                    proj.projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), dir.x, dir.y);
                     game.gameState = 3;
                     game.bulletTime = true;
 
@@ -164,7 +165,18 @@ public class IATurn : MonoBehaviour
             }
             else
             {
-                game.gameState = 5;
+                if (game.gameState == 4)
+                {
+                    game.gameState = 5;
+                }
+                if (game.gameState == 6)
+                {
+                    game.gameState = 7;
+                }
+                if (game.gameState == 8)
+                {
+                    game.gameState = 9;
+                }
             }
         }
     }

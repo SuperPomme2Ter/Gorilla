@@ -12,8 +12,7 @@ public class main : MonoBehaviour
     public bool bulletTime;
     public IATurn IA;
     public float wind;
-    public ExploSettings _EXPLOSION;
-    private Animator anim;
+    public GameObject EXPLOSION;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +20,7 @@ public class main : MonoBehaviour
         gameState = 1;
         transition = false;
         bulletTime = false;
-        wind=(Random.value*100)-50;
+        wind=(Random.value*10)-5;
 
 
 
@@ -34,24 +33,24 @@ public class main : MonoBehaviour
         {
             if (transition)
             {
-                _EXPLOSION.transform.position=proj.projectile.transform.position;
-                _EXPLOSION.gameObject.SetActive(true);
+
                 gameState = 4;
                 proj.projectile.GetComponent<Ball>().transition = false;
                 transition = false;
                 IA.Recall();
-                anim.SetTrigger("Explosion");
+                EXPLOSION.transform.position=proj.projectile.transform.position;
+                EXPLOSION.GetComponent<Animator>().SetTrigger("Explosion");
 
 
             }
             else
             {
-                _EXPLOSION.transform.position=proj.projectile.transform.position;
-                _EXPLOSION.gameObject.SetActive(true);
                 gameState = 1;
                 proj.projectile.GetComponent<Ball>().transition = false;
                 mouv.grounded = true;
-                wind = (Random.value * 100) - 50;
+                wind = (Random.value * 10) - 5;
+                EXPLOSION.transform.position = proj.projectile.transform.position;
+                EXPLOSION.GetComponent<Animator>().SetTrigger("Explosion");
             }
         }
         if(bulletTime)
