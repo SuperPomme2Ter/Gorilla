@@ -22,7 +22,7 @@ public class IATurn : MonoBehaviour
 
     void Start()
     {
-         maxPos =new Vector2(rb.position.x,rb.position.y);
+        maxPos =new Vector2(rb.position.x,rb.position.y);
         minPos = new Vector2(rb.position.x * 0.5f, rb.position.y * 0.5f) ;
         dir = new Vector3(0,0,0);
         sens = new Vector3(0, 0, 0);
@@ -69,20 +69,24 @@ public class IATurn : MonoBehaviour
 
                     foreach (var Col in _terrain.ground)
                     {
-                        if (Col.GetComponent<Collider2D>().OverlapPoint(currentPos + new Vector3(sens.x * 0.4f, -0.4f, 0)) || Col.GetComponent<BoxCollider2D>().OverlapPoint(currentPos - new Vector3(sens.x * 0.4f, -0.4f, 0)))
+                        if (Col.GetComponent<Collider2D>().OverlapPoint(currentPos + new Vector3(sens.x * 0.5f, -0.5f, 0)) || Col.GetComponent<BoxCollider2D>().OverlapPoint(currentPos - new Vector3(sens.x * 0.5f, -0.5f, 0)))
                         {
                             if (Col.CompareTag("Wall"))
                             {
-                                if (Col.GetComponent<Collider2D>().OverlapPoint(currentPos + new Vector3(-sens.x * 0.4f, -1, 0)))
+                                
+                                if (Col.GetComponent<Collider2D>().OverlapPoint(currentPos + new Vector3(-sens.x * 0.5f, -1, 0)))
                                 {
+                                    
                                     collision = 2;
                                 }
                                 else
                                 {
                                     collision = 1;
+                                    
                                 }
                                 maxPos.y = maxPos.y + 10f * Time.fixedDeltaTime;
                             }
+                            break;
                         }
                         else
                         {
@@ -94,7 +98,7 @@ public class IATurn : MonoBehaviour
                         break;
                     }
 
-                    v += Physics.gravity * Time.fixedDeltaTime;
+                    v +=(new Vector3(game.wind,0,0)+ Physics.gravity) * Time.fixedDeltaTime;
                     Vector3 nextPos = currentPos + v * Time.fixedDeltaTime;
                     Debug.DrawLine(currentPos, nextPos, Color.cyan);
                     currentPos = nextPos;
@@ -133,18 +137,19 @@ public class IATurn : MonoBehaviour
 
                     if (collision == 0 || collision == 2)
                     {
-                        if (currentPos.x < maxPos.x - 0.5)
+                        if (currentPos.x < maxPos.x - 0.4)
                         {
                             dir.x += x * Time.fixedDeltaTime;
                         }
-                        if (currentPos.x > maxPos.x + 0.5)
-                        {
-                            dir.x -= x * Time.fixedDeltaTime;
-                        }
                     }
+                    if (currentPos.x > maxPos.x + 0.4)
+                    {
+                        dir.x -= x * Time.fixedDeltaTime;
+                    }
+                    
                     if (Vector3.Distance(rb.position, new Vector2(currentPos.x, currentPos.y)) < 3)
                     {
-                        x = 2;
+                        x = 5;
                     }
                     else
                     {

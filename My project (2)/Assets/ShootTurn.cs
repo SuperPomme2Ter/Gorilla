@@ -49,12 +49,15 @@ public class ShootTurn : MonoBehaviour
             {
                 if (currentPos.y < -3.0f)
                     break;
-                v +=Physics.gravity*Time.fixedDeltaTime;
+                v += (new Vector3(game.wind, 0, 0) + Physics.gravity) * Time.fixedDeltaTime;
                 Vector3 nextPos=currentPos+v*Time.fixedDeltaTime;
                 Debug.DrawLine(currentPos,nextPos);
                 currentPos = nextPos;
             }
             game.transition = false;
+        }if (game.gameState == 1)
+        {
+            shoot = Vector3.zero;
         }
     }
     public void Throw(InputAction.CallbackContext ctx)

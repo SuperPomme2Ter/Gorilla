@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4876832362792580294}
   - component: {fileID: 3382670047291802965}
   - component: {fileID: -1348046233624261845}
+  - component: {fileID: 536638843833368788}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -166,6 +167,7 @@ MonoBehaviour:
   col: {fileID: 4876832362792580294}
   Boom: {fileID: -1348046233624261845}
   transition: 0
+  game: {fileID: 0}
 --- !u!82 &-1348046233624261845
 AudioSource:
   m_ObjectHideFlags: 0
@@ -262,3 +264,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!111 &536638843833368788
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5761267350900811133}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 016dbfc734bf6d94fa60bad40da0351e, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

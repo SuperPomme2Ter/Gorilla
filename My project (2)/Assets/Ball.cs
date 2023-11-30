@@ -11,6 +11,9 @@ public class Ball : MonoBehaviour
     public CircleCollider2D col;
     public AudioSource Boom;
     public bool transition=false;
+
+    
+    public main game;
     
     Vector2 vel;
     public void createBall(Vector2 pos, float velX, float velY)

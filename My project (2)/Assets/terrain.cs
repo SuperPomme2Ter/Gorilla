@@ -7,7 +7,7 @@ public class terrain : MonoBehaviour
     // Start is called before the first frame update
     float x;
     float y;
-    float maxX=0.6f;
+    float maxX=0.2f;
     float maxY=1.2f;
     float rest = 24;
     public List<GameObject> ground;
@@ -17,8 +17,8 @@ public class terrain : MonoBehaviour
     {
         while (maxX > 0)
         {
-            x = Random.Range(0.1f, maxX) * 10;
-            y = Random.Range(0.1f, maxY) * 10;
+            x = Random.Range(0.2f, maxX) * 10;
+            y = Random.Range(0.2f, maxY) * 10;
             ground.Add(Instantiate(platform, new Vector2(-1000,-1000), transform.rotation));
             ground[ground.Count - 1].transform.position = new Vector2(-12+x/2+(24-rest), -5);
             ground[ground.Count-1].transform.localScale=new Vector2(x, y);
