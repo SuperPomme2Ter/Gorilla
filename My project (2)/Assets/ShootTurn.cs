@@ -12,6 +12,7 @@ public class ShootTurn : MonoBehaviour
     public main game;
     public Vector3 shoot=new Vector3(0,0,0);
     public Vector3 v;
+    public Vector3 currentPos;
     public Movements playerRb;
 
 
@@ -51,7 +52,7 @@ public class ShootTurn : MonoBehaviour
                     break;
                 v += (new Vector3(game.wind, 0, 0) + Physics.gravity) * Time.fixedDeltaTime;
                 Vector3 nextPos=currentPos+v*Time.fixedDeltaTime;
-                Debug.DrawLine(currentPos,nextPos);
+               // Debug.DrawLine(currentPos,nextPos);
                 currentPos = nextPos;
             }
             game.transition = false;

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -11,6 +10,8 @@ public class Ball : MonoBehaviour
     public CircleCollider2D col;
     public AudioSource Boom;
     public bool transition=false;
+    public int touch;
+
 
     
     public main game;
@@ -32,8 +33,20 @@ public class Ball : MonoBehaviour
         rb.position = new Vector2(1000, -1000);
         Boom.Play();
         transition = true;
+        if (col.gameObject.name == "Joueur")
+        {
+            touch = 1;
+        }
+        if (col.gameObject.name == "Bot")
+        {
+            touch = 2;
+        }
+        if (col.gameObject.tag == "Wall")
+        {
+            touch = 2;
+        }
     }
-
+ 
     void Start()
     {
         Boom.enabled = false;

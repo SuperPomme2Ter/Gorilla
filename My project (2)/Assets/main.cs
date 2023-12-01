@@ -13,7 +13,6 @@ public class main : MonoBehaviour
     public IATurn IA;
     public float wind;
     public GameObject EXPLOSION;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -59,3 +58,4 @@ public class main : MonoBehaviour
         }
     }
 }
+
