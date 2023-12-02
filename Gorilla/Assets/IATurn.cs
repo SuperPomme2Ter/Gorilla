@@ -11,6 +11,7 @@ public class IATurn : MonoBehaviour
     public Rigidbody2D rb;
     public ShootTurn proj;
     public terrain _terrain;
+    public trajectory viseur;
     public Vector2 maxPos;
     public Vector2 minPos;
 
@@ -20,6 +21,7 @@ public class IATurn : MonoBehaviour
     public float x;
     public float y;
     public Vector3 currentPos;
+    public Vector3 v;
 
     void Start()
     {
@@ -59,9 +61,12 @@ public class IATurn : MonoBehaviour
     {
         if (game.gameState == 4 || game.gameState == 6 || game.gameState==8)
         {
-            if (nbTry < 400)
+            viseur.trail.enabled = true;
+            viseur.trail.startColor = Color.red;
+            viseur.trail.endColor = Color.black;
+            if (nbTry < 350)
             {
-                Vector3 v = (transform.position + new Vector3(0, 1.5f) + dir) - (transform.position + new Vector3(0, 1.5f));
+                v = (transform.position + new Vector3(0, 1.5f) + dir) - (transform.position + new Vector3(0, 1.5f));
                 currentPos = transform.position + new Vector3(0, 1.5f);
                 v = (transform.position + new Vector3(0, 1.5f) + dir) - (transform.position + new Vector3(0, 1.5f));
                 currentPos = transform.position + new Vector3(0, 1.5f);
@@ -96,29 +101,33 @@ public class IATurn : MonoBehaviour
                     }
                     if (currentPos.y < -5.0f || collision == 1 || collision == 2)
                     {
+                        viseur.trail.positionCount = i;
                         break;
                     }
 
                     v +=(new Vector3(game.wind,0,0)+ Physics.gravity) * Time.fixedDeltaTime;
                     Vector3 nextPos = currentPos + v * Time.fixedDeltaTime;
-                    Debug.DrawLine(currentPos, nextPos, Color.cyan);
+                    viseur.positions[i] = currentPos;
                     currentPos = nextPos;
                     if (rb.gameObject.GetComponent<CapsuleCollider2D>().OverlapPoint(currentPos))
                     {
                         proj.projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), dir.x, dir.y);
                         game.gameState = 3;
                         game.bulletTime = true;
+                        viseur.trail.enabled = false;
 
 
                     }
 
 
                 }
+                viseur.trail.SetPositions(viseur.positions);
                 if (rb.gameObject.GetComponent<CapsuleCollider2D>().OverlapPoint(currentPos))
                 {
                     proj.projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), dir.x, dir.y);
                     game.gameState = 3;
                     game.bulletTime = true;
+                    viseur.trail.enabled = false;
 
 
                 }
@@ -168,15 +177,19 @@ public class IATurn : MonoBehaviour
                 if (game.gameState == 4)
                 {
                     game.gameState = 5;
+                    viseur.trail.enabled = false;
                 }
                 if (game.gameState == 6)
                 {
                     game.gameState = 7;
+                    viseur.trail.enabled = false;
                 }
                 if (game.gameState == 8)
                 {
                     game.gameState = 9;
+                    viseur.trail.enabled = false;
                 }
+                
             }
         }
     }

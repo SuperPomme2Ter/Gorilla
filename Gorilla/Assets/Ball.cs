@@ -43,7 +43,7 @@ public class Ball : MonoBehaviour
         }
         if (col.gameObject.tag == "Wall")
         {
-            touch = 2;
+            touch = 0;
         }
     }
  

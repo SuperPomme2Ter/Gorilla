@@ -68,7 +68,7 @@ public class IAMovement : MonoBehaviour
                 {
                     game.gameState = 6;
                     raycast.Recall();
-                    nbDep =0;
+                    nbDep = 0;
                 }
                 if (game.gameState == 7)
                 {
@@ -76,10 +76,13 @@ public class IAMovement : MonoBehaviour
                     raycast.Recall();
                     nbDep = 0;
                 }
-                if (game.gameState == 9)
+                if (game.gameState != 11 || game.gameState != 12)
                 {
-                    game.gameState = 1;
-                    nbDep = 0;
+                    if (game.gameState == 9)
+                    {
+                        game.gameState = 1;
+                        nbDep = 0;
+                    }
                 }
             }
             nbDep += 1;

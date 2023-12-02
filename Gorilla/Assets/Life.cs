@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Life : MonoBehaviour
@@ -13,6 +12,8 @@ public class Life : MonoBehaviour
     public UnityEngine.UI.Image lifeJ;
     public UnityEngine.UI.Image lifeIA;
     public main game;
+    public bool test = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +46,8 @@ public class Life : MonoBehaviour
             if (actualSpriteJ == 0)
             {
                 Staticvar.winner = false;
-                SceneManager.LoadScene("End");
+                game.gameState = 11;
+                test = true;
             }
             
         }
@@ -72,8 +74,8 @@ public class Life : MonoBehaviour
             if (actualSpriteIA == 0)
             {
                 Staticvar.winner = true;
-                SceneManager.LoadScene("End");
-                
+                game.gameState = 11;
+                test = true;
             }
 
         }

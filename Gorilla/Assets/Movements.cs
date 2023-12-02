@@ -72,21 +72,23 @@ public class Movements : MonoBehaviour
     }
     public void ShootMode(InputAction.CallbackContext ctx)
     {
-        if (!game.transition)
+        if (game.gameState != 11 || game.gameState != 12)
         {
-            if (ctx.phase == InputActionPhase.Started)
+            if (!game.transition)
             {
-
-                if (game.gameState == 1)
+                if (ctx.phase == InputActionPhase.Started)
                 {
-                    game.gameState = 2;
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    game.transition = true;
-                    print("Wop Wop Wop");
+
+                    if (game.gameState == 1)
+                    {
+                        game.gameState = 2;
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                        game.transition = true;
+                        print("Wop Wop Wop");
+                    }
                 }
             }
         }
-
     }
 
 }

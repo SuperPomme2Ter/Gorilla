@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class ShootTurn : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ShootTurn : MonoBehaviour
     public Vector3 v;
     public Vector3 currentPos;
     public Movements playerRb;
+    public trajectory viseur;
 
 
     // Start is called before the first frame update
@@ -28,6 +30,10 @@ public class ShootTurn : MonoBehaviour
     {
         if (game.gameState == 2)
         {
+            viseur.trail.positionCount = 50;
+            viseur.trail.enabled = true;
+            viseur.trail.startColor = Color.cyan;
+            viseur.trail.endColor = Color.blue;
             if (Up.action.inProgress)
             {
                 shoot.y += 4f * Time.fixedDeltaTime;
@@ -45,16 +51,18 @@ public class ShootTurn : MonoBehaviour
                 shoot.x += 4f * Time.fixedDeltaTime;
             }
             v= (transform.position + new Vector3(0, 1.5f, 0)+shoot)- (transform.position + new Vector3(0, 1.5f, 0));
-            Vector3 currentPos=transform.position+new Vector3(0, 1.5f, 0);
+            currentPos=transform.position+new Vector3(0, 1.5f, 0);
             for (int i = 0; i < 50; i++)
             {
                 if (currentPos.y < -3.0f)
                     break;
                 v += (new Vector3(game.wind, 0, 0) + Physics.gravity) * Time.fixedDeltaTime;
-                Vector3 nextPos=currentPos+v*Time.fixedDeltaTime;
-               // Debug.DrawLine(currentPos,nextPos);
+                Vector3 nextPos = currentPos + v * Time.fixedDeltaTime;
+                viseur.positions[i] = currentPos;
                 currentPos = nextPos;
             }
+            
+            viseur.trail.SetPositions(viseur.positions);
             game.transition = false;
         }if (game.gameState == 1)
         {
@@ -63,18 +71,21 @@ public class ShootTurn : MonoBehaviour
     }
     public void Throw(InputAction.CallbackContext ctx)
     {
-        if (!game.transition)
+        if (game.gameState != 11 || game.gameState != 12)
         {
-            if (game.gameState == 2)
+            if (!game.transition)
             {
-                if (ctx.phase == InputActionPhase.Started)
+                if (game.gameState == 2)
                 {
-                    projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), shoot.x,shoot.y);
-                    game.gameState = 3;
-                    game.transition = true;
-                    game.bulletTime = true;
+                    if (ctx.phase == InputActionPhase.Started)
+                    {
+                        projectile.GetComponent<Ball>().createBall(transform.position + new Vector3(0, 1.5f), shoot.x, shoot.y);
+                        game.gameState = 3;
+                        game.transition = true;
+                        game.bulletTime = true;
+                        viseur.trail.enabled = false;
 
-
+                    }
                 }
             }
         }
